@@ -42,7 +42,8 @@ public class MovementComponent : MonoBehaviour
     #endregion
 
     #region Movement Variables
-    private Vector2 inputVector = Vector2.zero;
+    private Vector2 movementInputVector = Vector2.zero;
+    private Vector2 facingInputVector = Vector2.zero;
     private Vector3 moveDirection = Vector3.zero;
     private Vector2 lookInput = Vector3.zero;
     #endregion
@@ -146,20 +147,29 @@ public class MovementComponent : MonoBehaviour
 
 
         if (playerController.isInAir) return;
-        if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
+        if (!(movementInputVector.magnitude > 0)) moveDirection = Vector3.zero;
         
-        moveDirection = transform.forward * inputVector.y + transform.right * inputVector.x;
+        moveDirection = Vector3.forward * movementInputVector.y + Vector3.right * movementInputVector.x;
         float currentSpeed = playerController.isRunning ? runSpeed : walkSpeed;
         
         Vector3 movementDirection = moveDirection * currentSpeed * Time.deltaTime;
         transform.position += movementDirection;
+
+        transform.rotation = Quaternion.LookRotation(new Vector3(facingInputVector.x, 0, facingInputVector.y), Vector3.up);
     }
 
     public void OnMovement(InputValue value)
     {
-        inputVector = value.Get<Vector2>();
-        animator.SetFloat(movementXHash, inputVector.x);
-        animator.SetFloat(movementYHash, inputVector.y);
+        movementInputVector = value.Get<Vector2>();
+        animator.SetFloat(movementXHash, movementInputVector.x);
+        animator.SetFloat(movementYHash, movementInputVector.y);
+    }
+
+    public void OnFacing(InputValue value)
+    {
+        Vector2 vector = value.Get<Vector2>();
+        if (vector.magnitude > 0.125)
+            facingInputVector = value.Get<Vector2>();
     }
 
     public void OnRun(InputValue value)
