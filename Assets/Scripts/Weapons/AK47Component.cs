@@ -48,7 +48,7 @@ public class AK47Component : WeaponComponent
             hitLocation = hit.point;
         }
 
-        aimLine.SetPosition(0, aimLine.transform.position);
+        aimLine.SetPosition(0, muzzleLocation.position);
         aimLine.SetPosition(1, hitLocation);
     }
 }
