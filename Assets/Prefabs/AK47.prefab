@@ -31,7 +31,6 @@ Transform:
   - {fileID: 1322254094754692123}
   - {fileID: 1484337294445630096}
   - {fileID: 8335108243405336950}
-  - {fileID: 5661286798281235801}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,14 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gripLocation: {fileID: 1484337294445630096}
+  _muzzleLocation: {fileID: 8335108243405336950}
   stats:
     type: 2
     firingPattern: 0
     weaponName: AK47
     damage: 35
-    bulletsInClip: 30
     clipSize: 30
-    totalBullets: 500
     fireStartDelay: 0
     refireRate: 0.1
     range: 500
@@ -67,6 +65,7 @@ MonoBehaviour:
     fireWhileMoving: 0
   weaponHolder: {fileID: 0}
   firingEffect: {fileID: 2845172919935912758}
+  aimLine: {fileID: 3214016910062916009}
 --- !u!1 &7275497801340418317
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2724055399445694384}
+  - {fileID: 5661286798281235801}
   m_Father: {fileID: 1322254092898351461}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 5661286798281235801}
   - component: {fileID: 3214016910062916009}
   m_Layer: 0
-  m_Name: LaserSocket
+  m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,11 +153,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8372159820158975406}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0881, z: 0.7268}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1322254092898351461}
-  m_RootOrder: 3
+  m_Father: {fileID: 8335108243405336950}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &3214016910062916009
 LineRenderer:
@@ -255,7 +255,7 @@ LineRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
 --- !u!1001 &1322254094755079835
 PrefabInstance:

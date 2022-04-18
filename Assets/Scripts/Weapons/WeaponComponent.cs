@@ -19,9 +19,7 @@ public struct WeaponStats
     public WeaponFiringPattern firingPattern;
     public string weaponName;
     public float damage;
-    public int bulletsInClip;
     public int clipSize;
-    public int totalBullets;
     public float fireStartDelay;
     public float refireRate;
     public float range;
@@ -36,6 +34,9 @@ public class WeaponComponent : MonoBehaviour
     [SerializeField]
     private Transform _gripLocation;
     public Transform gripLocation => _gripLocation;
+    [SerializeField]
+    private Transform _muzzleLocation;
+    public Transform muzzleLocation => _muzzleLocation;
     public WeaponStats stats;
     public WeaponHolder weaponHolder;
     [SerializeField]
@@ -49,6 +50,11 @@ public class WeaponComponent : MonoBehaviour
     private void Awake()
     {
         mainCamera = Camera.main;
+    }
+
+    private void Update()
+    {
+        DrawAimTelegraph();
     }
 
     public virtual void StartFiring()
@@ -76,17 +82,21 @@ public class WeaponComponent : MonoBehaviour
 
     protected virtual void Fire()
     {
-        Debug.Log("Firing weapon! " + stats.bulletsInClip + " bullets left in clip.");
+        Debug.Log("Firing weapon! " + weaponHolder.bulletsInClips[stats.weaponName] + " bullets left in clip.");
     }
+
+    protected virtual void DrawAimTelegraph() { }
 
     public virtual bool ShouldReload()
     {
-        return stats.totalBullets > 0 && (stats.dumpAmmoOnReload || stats.bulletsInClip < stats.clipSize);
+        ItemScriptable ammoItem = weaponHolder.player.inventory.FindItem(stats.weaponName + " Ammo");
+        return ammoItem && ammoItem.amount > 0 && (stats.dumpAmmoOnReload || weaponHolder.bulletsInClips[stats.weaponName] < stats.clipSize);
     }
 
     public virtual void StartReloading()
     {
-        if (stats.totalBullets > 0)
+        ItemScriptable ammoItem = weaponHolder.player.inventory.FindItem(stats.weaponName + " Ammo");
+        if (ammoItem && ammoItem.amount > 0)
         {
             isReloading = true;
             ReloadWeapon();
@@ -105,18 +115,19 @@ public class WeaponComponent : MonoBehaviour
         if (firingEffect && firingEffect.isPlaying)
             firingEffect.Stop();
 
-        int bulletsToFillClip = stats.dumpAmmoOnReload ? stats.clipSize : stats.clipSize - stats.bulletsInClip;
-        int bulletsLeftAfter = stats.totalBullets - bulletsToFillClip;
+        ItemScriptable ammoItem = weaponHolder.player.inventory.FindItem(stats.weaponName + " Ammo");
+        int bulletsToFillClip = stats.dumpAmmoOnReload ? stats.clipSize : stats.clipSize - weaponHolder.bulletsInClips[stats.weaponName];
+        int bulletsLeftAfter = ammoItem.amount - bulletsToFillClip;
 
         if (bulletsLeftAfter >= 0)
         {
-            stats.totalBullets -= bulletsToFillClip;
-            stats.bulletsInClip = stats.clipSize;
+            ammoItem.amount -= bulletsToFillClip;
+            weaponHolder.bulletsInClips[stats.weaponName] = stats.clipSize;
         }
         else
         {
-            stats.bulletsInClip += stats.totalBullets;
-            stats.totalBullets = 0;
+            weaponHolder.bulletsInClips[stats.weaponName] += ammoItem.amount;
+            ammoItem.amount = 0;
         }
     }
 }

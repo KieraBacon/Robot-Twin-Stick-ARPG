@@ -22,6 +22,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Facing_Mouse",
+                    "type": "Value",
+                    "id": "be51b14d-efe6-4dda-a695-c01ef18b559a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "7d031ef5-72e5-48f5-bda3-024255cb8ec8",
@@ -68,6 +76,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "f4a078dd-6a66-41a0-b1a6-99df4c3ce726",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -321,6 +337,28 @@
                     "processors": "StickDeadzone",
                     "groups": "Gamepad",
                     "action": "Facing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94e431c8-54f4-48ed-bc5f-5b7b56b32652",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Facing_Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "142bfdff-9343-4ccd-bd03-fb51b8aa3b2e",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

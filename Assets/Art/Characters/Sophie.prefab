@@ -880,6 +880,36 @@ Transform:
   m_Father: {fileID: 5702511382450842101}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2785005372940597548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7336446079220319684}
+  m_Layer: 0
+  m_Name: LaserSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7336446079220319684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785005372940597548}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7263234262475208452}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2875504081547873203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2501,9 +2531,11 @@ GameObject:
   - component: {fileID: 7153555043853500995}
   - component: {fileID: 7153555043853500996}
   - component: {fileID: 1767024992}
+  - component: {fileID: 4290092902698231347}
+  - component: {fileID: 2557830296274207649}
   m_Layer: 0
   m_Name: Sophie
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2527,6 +2559,7 @@ Transform:
   - {fileID: 3271790408372575410}
   - {fileID: 2926323641216505744}
   - {fileID: 627637621}
+  - {fileID: 7336446079220319684}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2593,7 +2626,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &7153555043853500994
 CapsuleCollider:
@@ -2625,9 +2658,17 @@ MonoBehaviour:
   runSpeed: 10
   jumpForce: 5
   aimSensitivity: 0.25
-  followTarget: {fileID: 627637620}
-  cameraMin: -70
+  maxJumps: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  groundedAngle: 45
+  raycastDist: 0.1
+  coyoteTime: 0.1
+  jumpTime: 0.1
+  cameraMin: -20
   cameraMax: 70
+  followTarget: {fileID: 627637620}
 --- !u!114 &7153555043853500996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2642,9 +2683,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFiring: 0
   isReloading: 0
-  isJumping: 0
+  isInAir: 0
   isRunning: 0
   isAiming: 0
+  inInventory: 0
+  inventory: {fileID: 0}
+  uiController: {fileID: 0}
+  weaponHolder: {fileID: 0}
+  healthComponent: {fileID: 0}
 --- !u!114 &1767024992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2659,7 +2705,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponToSpawn: {fileID: 1322254092898351462, guid: a0ef9706d3924ca4881731c3ab939dc9, type: 3}
   crossHairImage: {fileID: 21300000, guid: 118c6fa7367591245bc1adaef170cdeb, type: 3}
-  weaponSocketLocation: {fileID: 3804795204007326743}
+  weaponSocket: {fileID: 3804795204007326743}
+  gripIKSocket: {fileID: 0}
+  equippedWeapon: {fileID: 0}
+--- !u!114 &4290092902698231347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036640243911732670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0369fa9ebf52445b7e61a069f65c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 100
+  maxHealth: 100
+--- !u!114 &2557830296274207649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8036640243911732670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a06e1e07e24948f429413a16de31ae3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items: []
 --- !u!1 &8202173325922395906
 GameObject:
   m_ObjectHideFlags: 0

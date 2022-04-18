@@ -155,7 +155,9 @@ public class MovementComponent : MonoBehaviour
         Vector3 movementDirection = moveDirection * currentSpeed * Time.deltaTime;
         transform.position += movementDirection;
 
-        transform.rotation = Quaternion.LookRotation(new Vector3(facingInputVector.x, 0, facingInputVector.y), Vector3.up);
+        Vector3 viewingVector = new Vector3(facingInputVector.x, 0, facingInputVector.y);
+        if (viewingVector != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(viewingVector, Vector3.up);
     }
 
     public void OnMovement(InputValue value)
@@ -169,6 +171,15 @@ public class MovementComponent : MonoBehaviour
     {
         Vector2 vector = value.Get<Vector2>();
         if (vector.magnitude > 0.125)
+            facingInputVector = value.Get<Vector2>();
+    }
+
+    public void OnFacing_Mouse(InputValue value)
+    {
+        Vector2 vector = value.Get<Vector2>();
+        float magnitude = vector.magnitude;
+        float screenMagnitude = new Vector2(Screen.width, Screen.height).magnitude;
+        if (magnitude / screenMagnitude > 0.005f)
             facingInputVector = value.Get<Vector2>();
     }
 

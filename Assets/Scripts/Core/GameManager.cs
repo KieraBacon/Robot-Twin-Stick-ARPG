@@ -30,13 +30,13 @@ public class GameManager : Singleton<GameManager>
         {
             _cursorActive = true;
             Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.None;
         }
         else
         {
             _cursorActive = false;
             Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
