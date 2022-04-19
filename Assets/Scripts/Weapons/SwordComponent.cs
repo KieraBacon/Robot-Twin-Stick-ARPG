@@ -18,6 +18,8 @@ public class SwordComponent : WeaponComponent
             Collider[] hitColliders = Physics.OverlapSphere(weaponHolder.transform.position, stats.range, stats.weaponHitLayers);
             foreach (Collider collider in hitColliders)
             {
+                if (collider.gameObject == weaponHolder.gameObject) continue;
+
                 float angle = Vector3.SignedAngle(weaponHolder.transform.forward, collider.transform.position - weaponHolder.transform.position, Vector3.up);
                 Debug.Log("angle: " + angle);
                 if (Mathf.Abs(angle) > hitAngle) continue;

@@ -30,7 +30,10 @@ public class ZombieSpawner : MonoBehaviour
             zombiePool.AddLast(spawn);
         }
 
-        Fetch();
+        for (int i = 0; i < numberOfZombiesToSpawn; i++)
+        {
+            Fetch();
+        }
     }
 
     private GameObject Fetch()
