@@ -132,5 +132,11 @@ public class WeaponComponent : MonoBehaviour
             weaponHolder.bulletsInClips[stats.weaponName] += ammoItem.amount;
             ammoItem.amount = 0;
         }
+
+        if (ammoItem.amount <= 0)
+        {
+            ammoItem.DeleteItem(weaponHolder.controller);
+            weaponHolder.controller.inventory.DeleteItem(ammoItem);
+        }
     }
 }

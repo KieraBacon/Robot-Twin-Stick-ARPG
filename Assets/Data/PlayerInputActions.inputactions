@@ -354,6 +354,17 @@
                 {
                     "name": "",
                     "id": "142bfdff-9343-4ccd-bd03-fb51b8aa3b2e",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "265bc7dd-74eb-422b-8ef9-d724f10ad006",
                     "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
