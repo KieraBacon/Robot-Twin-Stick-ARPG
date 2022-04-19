@@ -151,7 +151,8 @@ public class WeaponHolder : MonoBehaviour
         if (!weaponScriptable) return;
 
         WeaponComponent spawnedWeapon = Instantiate(weaponScriptable.itemPrefab, weaponSocket.transform.position, weaponSocket.transform.rotation, weaponSocket.transform).GetComponent<WeaponComponent>();
-        spawnedWeapon.stats = weaponScriptable.weaponStats;
+        spawnedWeapon.scriptable = weaponScriptable;
+        weaponScriptable.Equipped = true;
         if (!spawnedWeapon) return;
 
         EquipWeapon(spawnedWeapon);
@@ -161,6 +162,7 @@ public class WeaponHolder : MonoBehaviour
     {
         if (!equippedWeapon) return;
 
+        equippedWeapon.scriptable.Equipped = false;
         Destroy(equippedWeapon.gameObject);
         equippedWeapon = null;
         animator.SetInteger(weaponTypeHash, 0);

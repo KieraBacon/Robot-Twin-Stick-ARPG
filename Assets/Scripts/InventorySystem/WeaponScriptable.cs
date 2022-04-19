@@ -9,20 +9,19 @@ public class WeaponScriptable : EquippableScriptable
 
     public override void UseItem(PlayerController playerController)
     {
-        if (Equipped || playerController.weaponHolder.equippedWeapon)
+        // Check to see if the player has this weapon equipped
+        bool thisEquipped = Equipped;
+
+        // Check to see if the player has any weapon equipped, and if so, unequip it
+        if (playerController.weaponHolder.equippedWeapon)
         {
             playerController.weaponHolder.UnequipWeapon();
-            // Unequip from inventory here
-            // Remove from controller here
         }
-        else
-        {
-            // Invote OnWeaponEquipped from player here for inventory
-            // Equip weapon from weapon holder on payerController
 
+        // If the player had not had this weapon equipped, equip it
+        if (!thisEquipped)
+        {
             playerController.weaponHolder.EquipWeapon(this);
         }
-
-        base.UseItem(playerController);
     }
 }

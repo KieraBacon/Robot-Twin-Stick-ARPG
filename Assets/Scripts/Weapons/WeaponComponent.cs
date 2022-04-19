@@ -40,7 +40,8 @@ public class WeaponComponent : MonoBehaviour
     [SerializeField]
     private Transform _muzzleLocation;
     public Transform muzzleLocation => _muzzleLocation;
-    public WeaponStats stats;
+    public WeaponStats stats => scriptable.weaponStats;
+    public WeaponScriptable scriptable;
     public WeaponHolder weaponHolder;
     [SerializeField]
     protected ParticleSystem firingEffect;
