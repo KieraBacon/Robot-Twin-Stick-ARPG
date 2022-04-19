@@ -5,6 +5,7 @@ using UnityEngine;
 public class ZombieState_Following : ZombieState
 {
     float stoppingDistance = 2;
+    float maxFollowDistance = 20;
 
     public ZombieState_Following(ZombieComponent owningZombie, ZombieStateMachine stateMachine) : base(owningZombie, stateMachine)
     {
@@ -47,6 +48,11 @@ public class ZombieState_Following : ZombieState
         if (distance < stoppingDistance)
         {
             stateMachine.ChangeState(ZombieState.Type.Attacking);
+        }
+        else if (distance > maxFollowDistance)
+        {
+            owningZombie.followTarget = null;
+            stateMachine.ChangeState(ZombieState.Type.Idle);
         }
     }
 

@@ -40,7 +40,7 @@ public class ZombieStateMachine : MonoBehaviour
 
         if (currentState.updateInterval > 0)
         {
-            InvokeRepeating(nameof(IntervalUpdate), 0, currentState.updateInterval);
+            InvokeRepeating(nameof(IntervalUpdate), currentState.updateInterval, currentState.updateInterval);
         }
         isRunning = true;
     }

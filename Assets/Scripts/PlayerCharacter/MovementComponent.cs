@@ -19,6 +19,8 @@ public class MovementComponent : MonoBehaviour
     private int maxJumps = 1;
     private int jumpCount;
     private bool isGrounded;
+    [SerializeField]
+    private float mouseSensitivity = 0.005f;
 
     [Header("Ground Checking")]
     [SerializeField]
@@ -174,13 +176,19 @@ public class MovementComponent : MonoBehaviour
             facingInputVector = value.Get<Vector2>();
     }
 
+    Vector2 prevMousePos = Vector2.zero;
     public void OnFacing_Mouse(InputValue value)
     {
         Vector2 vector = value.Get<Vector2>();
-        float magnitude = vector.magnitude;
-        float screenMagnitude = new Vector2(Screen.width, Screen.height).magnitude;
-        if (magnitude / screenMagnitude > 0.005f)
-            facingInputVector = value.Get<Vector2>();
+        prevMousePos = (prevMousePos + vector * mouseSensitivity).normalized;
+        facingInputVector = prevMousePos;
+
+        //float magnitude = prevMousePos.magnitude;
+        //float screenMagnitude = new Vector2(Screen.width, Screen.height).magnitude;
+        //if (magnitude / screenMagnitude > mouseSensitivity)
+        //{
+        //    facingInputVector = value.Get<Vector2>();
+        //}
     }
 
     public void OnRun(InputValue value)

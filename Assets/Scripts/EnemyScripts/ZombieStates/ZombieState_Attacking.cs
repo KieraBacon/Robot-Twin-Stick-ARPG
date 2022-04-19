@@ -10,7 +10,6 @@ public class ZombieState_Attacking : ZombieState
     public ZombieState_Attacking(ZombieComponent zombie, ZombieStateMachine stateMachine) : base(zombie, stateMachine)
     {
         updateInterval = 2;
-        damageableTarget = zombie.followTarget.GetComponent<IDamageable>();
     }
 
     public override void Enter()
@@ -20,6 +19,7 @@ public class ZombieState_Attacking : ZombieState
         owningZombie.navMeshAgent.ResetPath();
         owningZombie.animator.SetFloat(movementZHash, 0);
         owningZombie.animator.SetBool(isAttackingHash, true);
+        damageableTarget = owningZombie.followTarget.GetComponent<IDamageable>();
     }
 
     public override void IntervalUpdate()

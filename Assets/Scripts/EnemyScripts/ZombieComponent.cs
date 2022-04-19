@@ -13,6 +13,7 @@ public class ZombieComponent : MonoBehaviour
     private ZombieStateMachine _stateMachine;
     public ZombieStateMachine stateMachine => _stateMachine;
     public GameObject followTarget;
+    public TargetDetector targetDetector;
 
     private void Awake()
     {
@@ -23,8 +24,6 @@ public class ZombieComponent : MonoBehaviour
 
     private void Start()
     {
-        if (!followTarget)
-            followTarget = GameObject.FindGameObjectWithTag("Player");
         Initialize();
     }
 
@@ -42,6 +41,6 @@ public class ZombieComponent : MonoBehaviour
         ZombieState_Attacking attackState = new ZombieState_Attacking(this, stateMachine);
         stateMachine.AddState(ZombieState.Type.Attacking, attackState);
 
-        stateMachine.Initialize(ZombieState.Type.Following);
+        stateMachine.Initialize(ZombieState.Type.Idle);
     }
 }
