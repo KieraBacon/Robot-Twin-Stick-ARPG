@@ -49,7 +49,7 @@ MonoBehaviour:
   _gripLocation: {fileID: 1484337294445630096}
   _muzzleLocation: {fileID: 8335108243405336950}
   stats:
-    type: 2
+    type: 1
     firingPattern: 0
     weaponName: AK47
     damage: 35
@@ -60,7 +60,7 @@ MonoBehaviour:
     repeating: 1
     weaponHitLayers:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 65
     dumpAmmoOnReload: 1
     fireWhileMoving: 0
   weaponHolder: {fileID: 0}

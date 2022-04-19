@@ -6,6 +6,7 @@ public class AK47Component : WeaponComponent
 {
     [SerializeField]
     private LineRenderer aimLine;
+    private Vector3 hitLocation;
 
     protected override void Fire()
     {
@@ -21,8 +22,9 @@ public class AK47Component : WeaponComponent
             Ray weaponRay = new Ray(muzzleLocation.position, weaponHolder.transform.forward);
             if (Physics.Raycast(weaponRay, out RaycastHit hit, stats.range, stats.weaponHitLayers))
             {
-                Vector3 hitLocation = hit.point;
+                hitLocation = hit.point;
                 Vector3 hitDirection = hit.point - weaponHolder.transform.position;
+                DealDamage(hit);
                 Debug.DrawRay(weaponRay.origin, hitDirection * stats.range, Color.red, 5.0f);
             }
         }
@@ -36,15 +38,26 @@ public class AK47Component : WeaponComponent
         }
     }
 
+
+    void DealDamage(RaycastHit hitInfo)
+    {
+        Debug.Log(Time.time + " Layer: " + LayerMask.LayerToName(hitInfo.collider.gameObject.layer) + " Name: " + hitInfo.collider.gameObject.name);
+        hitInfo.collider.GetComponent<IDamageable>()?.TakeDamage(weaponHolder.gameObject, stats.damage);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(hitLocation, 0.1f);
+    }
+
     protected override void DrawAimTelegraph()
     {
         Ray weaponRay = new Ray(muzzleLocation.position, weaponHolder.transform.forward);
         
         Vector3 hitLocation = weaponRay.GetPoint(stats.range);
-        
         if (Physics.Raycast(weaponRay, out RaycastHit hit, stats.range, stats.weaponHitLayers))
         {
-            Debug.Log("Hit!");
             hitLocation = hit.point;
         }
 
@@ -52,3 +65,4 @@ public class AK47Component : WeaponComponent
         aimLine.SetPosition(1, hitLocation);
     }
 }
+

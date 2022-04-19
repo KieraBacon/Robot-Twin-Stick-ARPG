@@ -19,19 +19,17 @@ MonoBehaviour:
   maxStackSize: 1
   amount: 1
   weaponStats:
-    type: 2
+    type: 1
     firingPattern: 0
     weaponName: AK47
     damage: 35
-    bulletsInClip: 30
     clipSize: 30
-    totalBullets: 500
     fireStartDelay: 0
     refireRate: 0.1
     range: 500
     repeating: 1
     weaponHitLayers:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 65
     dumpAmmoOnReload: 1
     fireWhileMoving: 0

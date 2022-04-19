@@ -14,7 +14,10 @@ public class ZombieState_Idle : ZombieState
         base.Enter();
         owningZombie.navMeshAgent.isStopped = true;
         owningZombie.navMeshAgent.ResetPath();
-        owningZombie.animator.SetFloat(movementZHash, 0);
+        owningZombie.animator.SetFloat(movementXHash, 0);
+
+        if (!owningZombie.followTarget)
+            GetNearestTarget();
 
         owningZombie.targetDetector.onNewTargetInRange += OnNewTargetInRange;
     }
@@ -27,18 +30,26 @@ public class ZombieState_Idle : ZombieState
         owningZombie.targetDetector.onNewTargetInRange -= OnNewTargetInRange;
     }
 
+    private void GetNearestTarget()
+    {
+        GameObject target = owningZombie.targetDetector.GetNearestTarget();
+        if (target)
+        {
+            owningZombie.followTarget = target;
+            stateMachine.ChangeState(ZombieState.Type.Following);
+        }
+    }
+
     public override void IntervalUpdate()
     {
         base.IntervalUpdate();
-        if (!owningZombie.followTarget)
+        if (owningZombie.followTarget)
         {
-            GameObject target = owningZombie.targetDetector.GetNearestTarget();
-            if (target)
-            {
-                owningZombie.followTarget = target;
-                stateMachine.ChangeState(ZombieState.Type.Following);
-                return;
-            }
+            stateMachine.ChangeState(ZombieState.Type.Following);
+        }
+        else
+        {
+            GetNearestTarget();
         }
     }
 

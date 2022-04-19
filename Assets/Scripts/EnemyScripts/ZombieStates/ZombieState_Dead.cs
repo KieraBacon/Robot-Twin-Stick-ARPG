@@ -14,9 +14,10 @@ public class ZombieState_Dead : ZombieState
         base.Enter();
         owningZombie.navMeshAgent.isStopped = true;
         owningZombie.navMeshAgent.ResetPath();
-        owningZombie.animator.SetFloat(movementZHash, 0);
+        owningZombie.animator.SetFloat(movementXHash, 0);
         owningZombie.animator.SetBool(isDeadHash, true);
         owningZombie.GetComponent<CapsuleCollider>().enabled = false;
+        owningZombie.followTarget = null;
     }
 
     public override void Exit()
@@ -25,5 +26,6 @@ public class ZombieState_Dead : ZombieState
         owningZombie.navMeshAgent.isStopped = false;
         owningZombie.animator.SetBool(isDeadHash, false);
         owningZombie.GetComponent<CapsuleCollider>().enabled = true;
+        owningZombie.followTarget = null;
     }
 }

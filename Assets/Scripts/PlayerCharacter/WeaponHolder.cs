@@ -26,8 +26,9 @@ public class WeaponHolder : MonoBehaviour
 
     private bool firingPressed = false;
 
-    public readonly int isFiringHash = Animator.StringToHash("isFiring");
+    public readonly int isAttackingHash = Animator.StringToHash("isAttacking");
     public readonly int isReloadingHash = Animator.StringToHash("isReloading");
+    public readonly int weaponTypeHash = Animator.StringToHash("weaponType");
     public Dictionary<string, int> bulletsInClips = new Dictionary<string, int>();
 
     void Start()
@@ -111,21 +112,21 @@ public class WeaponHolder : MonoBehaviour
     {
         if (!equippedWeapon) return;
 
-        if (bulletsInClips[equippedWeapon.stats.weaponName] <= 0)
+        if (equippedWeapon.stats.clipSize > 0 && bulletsInClips[equippedWeapon.stats.weaponName] <= 0)
         {
             StartReloading();
             return;
         }
 
         playerController.isFiring = true;
-        animator.SetBool(isFiringHash, playerController.isFiring);
+        animator.SetBool(isAttackingHash, playerController.isFiring);
         equippedWeapon.StartFiring();
     }
 
     private void StopFiring()
     {
         playerController.isFiring = false;
-        animator.SetBool(isFiringHash, playerController.isFiring);
+        animator.SetBool(isAttackingHash, playerController.isFiring);
 
         if (!equippedWeapon) return;
         equippedWeapon.StopFiring();
@@ -137,6 +138,8 @@ public class WeaponHolder : MonoBehaviour
 
         equippedWeapon = weaponComponent;
         equippedWeapon.weaponHolder = this;
+        animator.SetInteger(weaponTypeHash, (int)equippedWeapon.stats.type);
+
         if (!bulletsInClips.ContainsKey(equippedWeapon.stats.weaponName))
             bulletsInClips.Add(equippedWeapon.stats.weaponName, equippedWeapon.stats.clipSize);
         gripIKSocket = equippedWeapon.gripLocation;
@@ -148,6 +151,7 @@ public class WeaponHolder : MonoBehaviour
         if (!weaponScriptable) return;
 
         WeaponComponent spawnedWeapon = Instantiate(weaponScriptable.itemPrefab, weaponSocket.transform.position, weaponSocket.transform.rotation, weaponSocket.transform).GetComponent<WeaponComponent>();
+        spawnedWeapon.stats = weaponScriptable.weaponStats;
         if (!spawnedWeapon) return;
 
         EquipWeapon(spawnedWeapon);
@@ -155,9 +159,10 @@ public class WeaponHolder : MonoBehaviour
 
     public void UnequipWeapon()
     {
-        if (equippedWeapon) return;
+        if (!equippedWeapon) return;
 
         Destroy(equippedWeapon.gameObject);
         equippedWeapon = null;
+        animator.SetInteger(weaponTypeHash, 0);
     }
 }

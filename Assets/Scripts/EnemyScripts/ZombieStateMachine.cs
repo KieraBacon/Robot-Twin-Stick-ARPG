@@ -7,7 +7,7 @@ public class ZombieStateMachine : MonoBehaviour
     public State currentState { get; private set; }
     protected Dictionary<ZombieState.Type, State> states = new Dictionary<ZombieState.Type, State>();
     bool isRunning;
-    
+
     public void Initialize(ZombieState.Type startingState)
     {
         if (states.ContainsKey(startingState))
@@ -54,7 +54,7 @@ public class ZombieStateMachine : MonoBehaviour
 
     private void IntervalUpdate()
     {
-        if (isRunning)
+        if (isRunning && gameObject.activeInHierarchy)
         {
             currentState.IntervalUpdate();
         }

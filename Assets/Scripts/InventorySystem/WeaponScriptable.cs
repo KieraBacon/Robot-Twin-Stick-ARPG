@@ -9,7 +9,7 @@ public class WeaponScriptable : EquippableScriptable
 
     public override void UseItem(PlayerController playerController)
     {
-        if (Equipped)
+        if (Equipped || playerController.weaponHolder.equippedWeapon)
         {
             playerController.weaponHolder.UnequipWeapon();
             // Unequip from inventory here

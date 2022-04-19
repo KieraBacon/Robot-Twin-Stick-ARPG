@@ -4,7 +4,10 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    None, Pistol, MachineGun,
+    None = 0,
+    MachineGun = 1,
+    Sword = 2,
+    Fist = 3,
 }
 
 public enum WeaponFiringPattern

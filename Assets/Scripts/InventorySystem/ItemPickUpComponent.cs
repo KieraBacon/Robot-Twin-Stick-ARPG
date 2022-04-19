@@ -11,8 +11,7 @@ public class ItemPickUpComponent : MonoBehaviour
     [SerializeField] private int amount = -1;
     [SerializeField] private float rotationSpeed = 10.0f;
 
-    [SerializeField] private MeshRenderer propMeshRenderer;
-    [SerializeField] private MeshFilter propMeshFilter;
+    [SerializeField] private GameObject propMesh;
 
     private ItemScriptable itemInstance;
 
@@ -33,16 +32,17 @@ public class ItemPickUpComponent : MonoBehaviour
 
     private void Update()
     {
-        propMeshFilter.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
+        propMesh.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.World);
     }
 
     private void ApplyMesh()
     {
-        MeshFilter prefabMeshFilter = pickupItem.itemPrefab.GetComponentInChildren<MeshFilter>();
-        if (propMeshFilter) propMeshFilter.mesh = prefabMeshFilter.sharedMesh;
-        if (propMeshRenderer) propMeshRenderer.materials = prefabMeshFilter.GetComponent<MeshRenderer>().sharedMaterials;
-        propMeshRenderer.transform.rotation = prefabMeshFilter.transform.rotation;
-        propMeshRenderer.transform.localScale = prefabMeshFilter.transform.lossyScale;
+        propMesh = Instantiate(pickupItem.itemPrefab);
+        propMesh.transform.position = transform.position;
+     
+        Destroy(propMesh.GetComponent<WeaponComponent>());
+        foreach (Collider collider in propMesh.GetComponentsInChildren<Collider>())
+            Destroy(collider);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,6 +57,7 @@ public class ItemPickUpComponent : MonoBehaviour
         // Add to intventory here
         // Get reference to the player inventory, add item to it
 
+        Destroy(propMesh.gameObject);
         Destroy(gameObject);
     }
 }

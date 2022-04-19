@@ -17,7 +17,7 @@ public class ZombieState_Following : ZombieState
         base.Enter();
         owningZombie.navMeshAgent.SetDestination(owningZombie.followTarget.transform.position);
         owningZombie.navMeshAgent.isStopped = false;
-        owningZombie.animator.SetFloat(movementZHash, 0);
+        owningZombie.animator.SetFloat(movementXHash, 0);
     }
 
     public override void IntervalUpdate()
@@ -42,7 +42,7 @@ public class ZombieState_Following : ZombieState
         }
 
         float moveZ = owningZombie.navMeshAgent.velocity.normalized.z != 0 ? 1 :0;
-        owningZombie.animator.SetFloat(movementZHash, moveZ);
+        owningZombie.animator.SetFloat(movementXHash, moveZ);
 
         float distance = Vector3.Distance(owningZombie.transform.position, owningZombie.followTarget.transform.position);
         if (distance < stoppingDistance)

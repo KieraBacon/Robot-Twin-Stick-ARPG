@@ -13,7 +13,7 @@ public class ZombieState : State
     }
 
     protected ZombieComponent owningZombie;
-    protected readonly int movementZHash = Animator.StringToHash("MovementZ");
+    protected readonly int movementXHash = Animator.StringToHash("MovementX");
     protected readonly int isAttackingHash = Animator.StringToHash("isAttacking");
     protected readonly int isDeadHash = Animator.StringToHash("isDead");
 

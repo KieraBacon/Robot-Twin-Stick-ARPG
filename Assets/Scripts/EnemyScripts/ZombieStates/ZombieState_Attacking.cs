@@ -17,7 +17,7 @@ public class ZombieState_Attacking : ZombieState
         base.Enter();
         owningZombie.navMeshAgent.isStopped = true;
         owningZombie.navMeshAgent.ResetPath();
-        owningZombie.animator.SetFloat(movementZHash, 0);
+        owningZombie.animator.SetFloat(movementXHash, 0);
         owningZombie.animator.SetBool(isAttackingHash, true);
         damageableTarget = owningZombie.followTarget.GetComponent<IDamageable>();
     }
@@ -31,7 +31,7 @@ public class ZombieState_Attacking : ZombieState
             return;
         }
 
-        damageableTarget?.TakeDamage(owningZombie.damage);
+        damageableTarget?.TakeDamage(owningZombie.gameObject, owningZombie.damage);
     }
 
     public override void Update()

@@ -2533,7 +2533,7 @@ GameObject:
   - component: {fileID: 1767024992}
   - component: {fileID: 4290092902698231347}
   - component: {fileID: 2557830296274207649}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sophie
   m_TagString: Player
   m_Icon: {fileID: 0}
