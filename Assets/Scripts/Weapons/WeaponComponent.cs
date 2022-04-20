@@ -51,6 +51,8 @@ public class WeaponComponent : MonoBehaviour
     
     protected Camera mainCamera;
 
+    private float nextFireTime;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -59,33 +61,55 @@ public class WeaponComponent : MonoBehaviour
     private void Update()
     {
         DrawAimTelegraph();
+        if (nextFireTime > 0 && nextFireTime - Time.time < 0)
+        {
+            if (isFiring)
+            {
+                Fire();
+            }
+            else
+            {
+                Debug.Log("Finishing the firing sequence!");
+                weaponHolder.FinishFiring();
+                nextFireTime = -1;
+            }
+        }
     }
 
     public virtual void StartFiring()
     {
+        if (isFiring)
+        {
+            Debug.Log("Is already firing!");
+            return;
+        }
+        else if (nextFireTime - Time.time < 0) // There's still time remaining after the last shot before the next one can fire
+        {
+            if (stats.fireStartDelay > 0)
+            {
+                Debug.Log("Was not firing, but there was a fire start delay!");
+                nextFireTime = Time.time + stats.fireStartDelay;
+            }
+            else
+            {
+                Debug.Log("Was not firing, and now is!");
+                Fire();
+            }
+        }
+
         isFiring = true;
-        if (stats.repeating)
-        {
-            var n = nameof(Fire);
-            CancelInvoke(n);
-            InvokeRepeating(n, stats.fireStartDelay, stats.refireRate);
-        }
-        else
-        {
-            Fire();
-        }
     }
 
     public virtual void StopFiring()
     {
         isFiring = false;
-        CancelInvoke(nameof(Fire));
         if (firingEffect && firingEffect.isPlaying)
             firingEffect.Stop();
     }
 
     protected virtual void Fire()
     {
+        nextFireTime = Time.time + stats.refireRate;
         Debug.Log("Firing weapon! " + weaponHolder.bulletsInClips[stats.weaponName] + " bullets left in clip.");
     }
 

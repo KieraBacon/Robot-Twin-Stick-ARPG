@@ -126,10 +126,14 @@ public class WeaponHolder : MonoBehaviour
     private void StopFiring()
     {
         playerController.isFiring = false;
-        animator.SetBool(isAttackingHash, playerController.isFiring);
 
         if (!equippedWeapon) return;
         equippedWeapon.StopFiring();
+    }
+
+    public void FinishFiring()
+    {
+        animator.SetBool(isAttackingHash, playerController.isFiring);
     }
 
     public void EquipWeapon(WeaponComponent weaponComponent)

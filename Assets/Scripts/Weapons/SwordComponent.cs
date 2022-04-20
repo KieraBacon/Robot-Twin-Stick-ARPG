@@ -28,22 +28,6 @@ public class SwordComponent : WeaponComponent
                 DealDamage(collider.gameObject);
                 //Debug.DrawRay(weaponHolder.transform.position, collider.transform.position - weaponHolder.transform.position, Color.green, 2);
             }
-
-
-            //RaycastHit[] hits = Physics.SphereCastAll(weaponHolder.transform.position, stats.range, weaponHolder.transform.forward, 0.1f, stats.weaponHitLayers);
-            //foreach (RaycastHit hit in hits)
-            //{
-            //    if (hit.collider.gameObject == weaponHolder.gameObject) continue;
-            //
-            //    float angle = Vector3.SignedAngle(weaponHolder.transform.forward, hit.point - weaponHolder.transform.position, Vector3.up);
-            //    Debug.DrawLine(weaponHolder.transform.position, hit.point, Color.magenta, 2);
-            //    Debug.DrawRay(Vector3.zero, hit.point - weaponHolder.transform.position, Color.green, 2);
-            //    Debug.Log("angle: " + angle + " name: " + hit.collider.gameObject.name);
-            //    if (angle > hitAngle) return;
-            //
-            //    hitLocations.AddLast(hit.point);
-            //    DealDamage(hit);
-            //}
         }
     }
 
