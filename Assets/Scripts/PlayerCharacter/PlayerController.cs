@@ -26,6 +26,21 @@ public class PlayerController : MonoBehaviour
         healthComponent = GetComponent<HealthComponent>();
     }
 
+    public void OnPause(InputValue value)
+    {
+        if (Time.timeScale > 0)
+        {
+            uiController.EnablePauseMenu();
+        }
+        else
+        {
+            if (inInventory)
+                uiController.EnableInventoryMenu();
+            else
+                uiController.EnableGameMenu();
+        }
+    }
+
     public void OnInventory(InputValue value)
     {
         inInventory = !inInventory;
@@ -34,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     private void SetInventoryOpen(bool value)
     {
+        if (Time.timeScale <= 0) return;
+
         if (value)
         {
             uiController.EnableInventoryMenu();
